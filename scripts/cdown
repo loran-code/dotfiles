@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Countdown
+cdown () {
+    N=$1
+    N=($N+1)
+  while [[ $((--N)) -gt  0 ]]
+    do
+        echo "$N" |  figlet | lolcat &&  sleep 1
+    done
+}
+
+cdown "$@"

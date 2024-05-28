@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    echo "Usage: ccat <filename>"
+    return 1
+fi
+bat --paging=never "$1" | wl-copy

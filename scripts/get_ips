@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Get the list of interfaces and their IP addresses
+ip -o addr show | awk '
+BEGIN {
+    # Print the header
+    printf "%-15s %s\n", "Interface", "IP Address"
+    printf "%-15s %s\n", "---------", "----------"
+}
+{
+    if ($3 == "inet" || $3 == "inet6") {
+        # Print the interface name and IP address
+        printf "%-15s %s\n", $2, $4
+    }
+}'

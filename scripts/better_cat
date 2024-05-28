@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    echo "Usage: cat <filename>"
+    return 1
+fi
+bat --paging=never "$1"
+echo "If you want to copy the contents of the file use: ccat <filename>"

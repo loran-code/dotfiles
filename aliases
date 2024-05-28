@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# general
+alias clip='wl-copy'
+alias ncat='rlwrap ncat'
+alias pls='sudo !!' # redo the last command with sudo privileges
+alias cat='better_cat'
+alias ccat='copy_file_content' # Copy what's inside of the file to the clipboard
+alias ex='dtrx' # Do the right extraction - extract each compression type easily
+alias grep='rg'
+alias ripgrep='rg'
+alias cat='better_cat'
+alias dot='cd ~/.config'
+alias df='duf'
+alias du='ncdu'
+alias mkvenv='python3 -m venv ./venv/'
+alias svenv='source venv/bin/activate'
+alias dd='nautilus'
+alias l='lsd'
+alias ls='lsd'
+alias tree='lsd --tree'
+alias share_folder="sudo vmhgfs-fuse /mnt/hgfs/ -orw,default_permissions,allow_other,dev,suid"
+
+
+# shortcuts
+alias c='clear'
+alias e='exit'
+alias s='flameshot gui'
+alias q='exit'
+alias d='yazi_cli'
+alias f='find . -type f -print 2>/dev/null | fzf --preview "bat --color=always --style=numbers --line-range=:200 {}" | clip'
+alias z='zoxide'
+alias zz='z -'
+alias sb='source ~/.bashrc'
+# alias fc='f | clip' # Copies the file path to the clipboard
+
+# processes
+alias top='btop'
+alias htop='btop'
+alias top='btop'
+alias ps='procs'
+
+# navigation
+alias ..='cd ..'
+
+# editors
+alias nano='micro'
+alias n='nvim'
+alias vim='nvim'
+
+# docker
+alias dp='docker ps -a'
+alias di='docker images'
+alias ds='docker stop'
+alias dr='docker rm'
+alias dri='docker images -f "dangling=true" -q | xargs -r docker rmi && docker container prune -f'
+alias up='docker compose up -d'
+alias down='docker compose down'
+
+# git
+alias gp='git pull'
+alias gc='git commit'
+alias gs='git status'
+alias lg='lazygit'
+
+# fun
+alias rr='curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash'
