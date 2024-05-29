@@ -8,7 +8,7 @@ export PATH="$PATH:$HOME/go/bin"
 
 # Source Cargo environment
 if [ -f "$HOME/.cargo/env" ]; then
-    . "$HOME/.cargo/env"
+    source "$HOME/.cargo/env"
 fi
 
 # Source Alacritty completions
@@ -34,12 +34,15 @@ if [ -f ~/.bash-preexec.sh ]; then
     source ~/.bash-preexec.sh
 fi
 
-# Initialize Atuin
+# Initialize atuin
 eval "$(atuin init bash)"
 
-# Initialize Starship prompt
+# Initialize starship
 eval "$(starship init bash)"
 
+# Initialize zoxide
+eval "$(zoxide init bash)"
+
 # Initialize Zellij
-# eval "$(zellij setup --generate-auto-start bash --layout ~/.config/zellij/config.kdl)"
-zellij --layout ~/.config/zellij/config.kdl
+eval "$(zellij setup --generate-auto-start bash)"
+#zellij --layout ~/.config/zellij/config.kdl

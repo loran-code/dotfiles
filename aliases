@@ -4,8 +4,8 @@
 alias clip='wl-copy'
 alias ncat='rlwrap ncat'
 alias pls='sudo !!' # redo the last command with sudo privileges
-alias cat='better_cat'
-alias ccat='copy_file_content' # Copy what's inside of the file to the clipboard
+alias cat='/usr/local/bin/better_cat'
+alias ccat='/usr/local/bin/ccat' # Copy what's inside of the file to the clipboard
 alias ex='dtrx' # Do the right extraction - extract each compression type easily
 alias grep='rg'
 alias ripgrep='rg'
@@ -16,11 +16,11 @@ alias du='ncdu'
 alias mkvenv='python3 -m venv ./venv/'
 alias svenv='source venv/bin/activate'
 alias dd='nautilus'
-alias l='lsd'
-alias ls='lsd'
+alias l='lsd -l'
+alias ll='lsd -la'
+alias ls='lsd -la'
 alias tree='lsd --tree'
 alias share_folder="sudo vmhgfs-fuse /mnt/hgfs/ -orw,default_permissions,allow_other,dev,suid"
-
 
 # shortcuts
 alias c='clear'
@@ -32,13 +32,13 @@ alias f='find . -type f -print 2>/dev/null | fzf --preview "bat --color=always -
 alias z='zoxide'
 alias zz='z -'
 alias sb='source ~/.bashrc'
-# alias fc='f | clip' # Copies the file path to the clipboard
 
 # processes
 alias top='btop'
 alias htop='btop'
 alias top='btop'
 alias ps='procs'
+alias p='progress -wm'
 
 # navigation
 alias ..='cd ..'
