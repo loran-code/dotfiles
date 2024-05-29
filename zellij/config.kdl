@@ -224,7 +224,7 @@ layout {
         pane command="btop"
     } 
     tab name="Dev Ops" {
-        pane command="ls"
+        pane command="bw"
     } 
     tab name="Docker" {
         pane command="/usr/local/bin/lazydocker"
