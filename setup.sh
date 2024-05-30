@@ -22,18 +22,20 @@ install_general_tools() {
     libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev apt-transport-https \
     ca-certificates software-properties-common tree jq btop flameshot rlwrap \
     ncat nmap gnome-tweaks neofetch sshfs rclone socat figlet lolcat dtrx \
-    wl-clipboard progress
+    wl-clipboard progress ncal 
+    # gnome-shell-pomodoro
 
     snap install procs --classic
     snap install go --classic
     snap install code --classic
-    snap install bw # bitwarden cli
+    # snap install bw # bitwarden cli
 }
 
 install_cli_tools() {
-    apt install -y lsd micro xclip ncdu duf fzf ripgrep bat neovim
+    apt install -y lsd micro ncdu duf fzf ripgrep bat neovim fd-find
     mkdir -p ~/.local/bin
-    ln -s /usr/bin/batcat ~/.local/bin/bat # Required for ubuntu
+    ln -s /usr/bin/fdfind ~/.local/bin/fd
+    ln -s /usr/bin/batcat ~/.local/bin/bat
 }
 
 clone_and_configure_dotfiles() {
@@ -47,11 +49,6 @@ clone_and_configure_dotfiles() {
     cp /opt/dotfiles/scripts/* /usr/local/bin/
     cp /opt/dotfiles/aliases $HOME/aliases
     cp /opt/dotfiles/.bashrc $HOME/.bashrc
-}
-
-configure_bash() {
-    mkdir -p ~/.local/bin
-    ln -s /usr/bin/fdfind ~/.local/bin/fd
 }
 
 configure_nerd_fonts() {
@@ -112,10 +109,12 @@ install_cargo_packages() {
     cargo install zellij --locked # Terminal Multiplexer
     cargo install zoxide --locked # zoxide is a smarter cd command, inspired by z and autojump.
     cargo install yazi-fm yazi-cli --locked  # CLI File Manager
+    cargo install fast-ssh --locked # TUI for SSH management
 }
 
 install_containers() {
-    docker pull lazyteam/lazydocker # Terminal UI container management
+    docker pull lazyteam/lazydocker # TUI container management
+    docker pull zingerbee/netop #  TUI that can customize the filter network traffic rul
     docker pull hashicorp/terraform # Infrastructure as code
     docker pull hashicorp/vault # Secret Management
     docker pull ansible/ansible # Configuration Management
@@ -124,33 +123,21 @@ install_containers() {
     docker pull containrrr/watchtower # Automating Docker container base image updates. 
 }
 
-install_insomnia() {
-    # Add to sources
-    curl -1sLf \
-    'https://packages.konghq.com/public/insomnia/setup.deb.sh' \
-    | -E distro=ubuntu codename=focal bash
-
-    # Refresh repository sources and install Insomnia
-    apt-get update
-    apt-get install insomnia
+install_lazygit() {
+    LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | command grep -Po '"tag_name": "v\K[^"]*')
+    curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+    tar xf lazygit.tar.gz lazygit
+    install lazygit /usr/local/bin
+    rm lazygit lazygit.tar.gz
 }
 
 install_devtools() {
     read -p "Do you want to install development tools (e.g., VS Code, Insomnia)? (y/n): " install_devtools_choice
     if [[ $install_devtools_choice == "y" ]]; then
-        install_insomnia
-        # Devcontainers?
+        sudo snap install insomnia 
+        install_lazygit
+        # devcontainers
         # testcontainers
-        # lazygit
-        # jetbrains toolbox
-    fi
-}
-
-install_python_tools() {
-    read -p "Do you want to install Python tools (pyenv, Poetry)? (y/n): " install_python_tools_choice
-    if [[ $install_python_tools_choice == "y" ]]; then
-        install_pyenv
-        install_poetry
     fi
 }
 
@@ -161,13 +148,6 @@ install_pyenv() {
 
     curl https://pyenv.run | bash
 
-    # echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
-    # echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
-    # echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init --path)"\nfi' >> ~/.bashrc
-    # echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
-
-    source ~/.bashrc
-
     pyenv update
     pyenv install 3.12.3
     pyenv global 3.12.3
@@ -175,8 +155,14 @@ install_pyenv() {
 
 install_poetry() {
     curl -sSL https://install.python-poetry.org | python -
-    echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
-    source ~/.bashrc
+}
+
+install_python_tools() {
+    read -p "Do you want to install Python tools (pyenv, Poetry)? (y/n): " install_python_tools_choice
+    if [[ $install_python_tools_choice == "y" ]]; then
+        install_pyenv
+        install_poetry
+    fi
 }
 
 configure_ssh() {
@@ -185,14 +171,8 @@ configure_ssh() {
 
 configure_cron_job() {
     # Add a cron job to update and upgrade the system on reboot
-    (crontab -l 2>/dev/null; echo "@reboot sudo apt update && sudo apt upgrade -y") | crontab -
+    echo "@reboot root apt update && apt upgrade -y" | tee -a /etc/crontab
 }
-
-configure_cron_job() {
-    # Add a cron job to update and upgrade the system on reboot
-    echo "@reboot apt update && apt upgrade -y" | tee -a /etc/crontab
-}
-
 
 configure_security() {
     # Install security tools
@@ -252,6 +232,10 @@ configure_security() {
     fi
 }
 
+configure_ubuntu_gnome() {
+
+}
+
 cleanup() {
 
 }
@@ -262,7 +246,6 @@ main() {
     install_general_tools
     install_cli_tools
     clone_and_configure_dotfiles
-    configure_bash
     configure_nerd_fonts
     install_starship
     install_atuin
@@ -277,11 +260,16 @@ main() {
     configure_ssh
     configure_cron_job
     configure_security
+    configure_ubuntu_gnome
     cleanup
 }
 
 main
+echo "Restart your terminal for changes to take effect"
 
+
+# configure_security further check
+# neovim config
 # pomodoro
 # llm
 # install_statusbar

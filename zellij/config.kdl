@@ -212,7 +212,7 @@ layout {
     }
     tab name="Overview" {
         pane split_direction="vertical" {
-            pane command="/usr/local/bin/welcome"
+            pane command="/usr/local/bin/netop"
             pane command="neofetch"
         }
         pane split_direction="vertical" {
@@ -223,8 +223,8 @@ layout {
     tab name="System" {
         pane command="btop"
     } 
-    tab name="Dev Ops" {
-        pane command="bw"
+    tab name="ssh" {
+        pane command="fast-ssh"
     } 
     tab name="Docker" {
         pane command="/usr/local/bin/lazydocker"
@@ -235,7 +235,7 @@ layout {
     tab name="Work" {
         pane split_direction="vertical" {
             pane command="/usr/local/bin/show_aliases"
-            pane        
+            pane command="/usr/local/bin/welcome"      
         }
     }
     tab name="LLM" {

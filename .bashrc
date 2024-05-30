@@ -41,7 +41,7 @@ eval "$(atuin init bash)"
 eval "$(starship init bash)"
 
 # Initialize zoxide
-eval "$(zoxide init bash)"
+eval "$(zoxide init --cmd cd bash)"
 
 # Initialize Zellij
 eval "$(zellij setup --generate-auto-start bash)"
