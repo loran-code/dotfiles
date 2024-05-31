@@ -1,0 +1,44 @@
+
+layout {
+    default_tab_template {
+        // the default zellij tab-bar and status bar plugins
+        pane size=1 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+        children
+        pane size=2 borderless=true {
+            plugin location="zellij:status-bar"
+        }
+    }
+    tab name="Overview" {
+        pane split_direction="vertical" {
+            pane command="/usr/local/bin/netop"
+            pane command="neofetch"
+        }
+        pane split_direction="vertical" {
+            pane command="/usr/local/bin/get_ips"
+            pane command="duf"
+        }
+    }
+    tab name="System" {
+        pane command="btop"
+    } 
+    tab name="ssh" {
+        pane command="fast-ssh"
+    } 
+    tab name="Docker" {
+        pane command="/usr/local/bin/lazydocker"
+    } 
+    tab name="File Manager" {
+        pane command="/usr/local/bin/yazi_cli"
+    }
+    tab name="Work" {
+        pane split_direction="vertical" {
+            pane command="/usr/local/bin/show_aliases"
+            pane command="/usr/local/bin/welcome"      
+        }
+    }
+    tab name="LLM" {
+        pane
+    } 
+}

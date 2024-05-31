@@ -43,6 +43,6 @@ eval "$(starship init bash)"
 # Initialize zoxide
 eval "$(zoxide init --cmd cd bash)"
 
-# Initialize Zellij
+# Initialize Zellij auto-start
 eval "$(zellij setup --generate-auto-start bash)"
-#zellij --layout ~/.config/zellij/config.kdl
+# --layout $HOME/.config/zellij/layouts/layout.kdl
